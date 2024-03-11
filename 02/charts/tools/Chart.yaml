@@ -1,0 +1,6 @@
+apiVersion: v2
+name: tools
+appVersion: "0.0.1"
+description: A Helm chart for Insurance tools 0.0.1
+version: 0.0.1
+type: application

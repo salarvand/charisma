@@ -1,0 +1,6 @@
+namespace: dev
+hostName: localhost
+
+secret:
+  mongodb_username: admin
+  mongodb_password: password

@@ -1,0 +1,10 @@
+# ingress:
+#   hosts:
+#     - host:
+#         domain: share.insurance.local
+#         chart: share
+   
+namespace: dev
+hostName: localhost
+
+

@@ -1,0 +1,45 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: sqlserver
+#   namespace: {{ .Values.namespace }}
+# spec:
+#   minReadySeconds: 60
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: sqlserver
+#   strategy:
+#     rollingUpdate:
+#       maxUnavailable: 0
+#       maxSurge: 1    
+#   template:
+#     metadata:
+#       labels:
+#         app: sqlserver
+#     spec:
+#       containers:
+#         - name: sqlserver
+#           image: mcr.microsoft.com/mssql/server:2022-latest
+#           imagePullPolicy: IfNotPresent
+#           env:
+#             - name: SA_PASSWORD
+#               value: "Admin@123"
+#             - name: ACCEPT_EULA
+#               value: "Y"
+#           ports:
+#             - containerPort: 1433 
+#               protocol: TCP      
+# ---
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: sqlserver
+# spec:
+#   ports:
+#     - name: sqlserver
+#       port: 1433
+#       targetPort: 1433
+#   selector:
+#     app: sqlserver

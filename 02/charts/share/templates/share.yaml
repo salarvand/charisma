@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "share.fullname" . }}
+  namespace: {{ .Values.namespace }}
+spec:
+  minReadySeconds: {{ .Values.share.min_ready_seconds }}
+  replicas: {{ .Values.share.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "share.fullname" . }}
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: {{ include "share.fullname" . }}
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/config: {{ .Values.share.block_config }}
+        # dapr.io/app-id: {{ include "share.fullname" . }}
+        dapr.io/app-id: "share"
+        dapr.io/app-port: {{ .Values.config.app_port | quote}}
+        dapr.io/log-as-json: "true"
+    spec:
+      containers:
+      - name: {{ include "share.fullname" . }}
+        image:  {{ list .Values.share.image.repository ":" .Values.share.image.tag | join "" }} 
+        imagePullPolicy: Always
+        ports:
+        - name: "api-http"
+          containerPort: {{ .Values.config.app_port }}
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+           name: {{ include "share.fullname" . }}-env

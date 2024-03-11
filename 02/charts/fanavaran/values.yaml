@@ -1,0 +1,26 @@
+namespace: dev
+hostName: localhost
+
+config:
+  app_port: 8080
+
+service:
+  type: ClusterIP
+  port: 80
+
+fanavaran:
+  image:
+    repository: dockerhost.charisma.tech/fanavaran-api
+    tag: latest
+  # image_db:
+  #   repository: localhost:5001/insurance-share-api-dbup
+  #   tag: latest  
+  replicas: 1
+  min_ready_seconds: 60
+  block_config: "block-config"
+  # sql:
+  #   server: sqlserver.dev.svc.cluster.local
+  #   port: 1433
+  #   database: Share
+  #   user_id: sa
+  #   password: Admin@123

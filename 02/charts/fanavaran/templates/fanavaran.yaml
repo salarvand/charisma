@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "fanavaran.fullname" . }}
+  namespace: {{ .Values.namespace }}
+spec:
+  minReadySeconds: {{ .Values.fanavaran.min_ready_seconds }}
+  replicas: {{ .Values.fanavaran.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "fanavaran.fullname" . }}
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: {{ include "fanavaran.fullname" . }}
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/config: {{ .Values.fanavaran.block_config }}
+        # dapr.io/app-id: {{ include "fanavaran.fullname" . }}
+        dapr.io/app-id: "fanavaran"
+        dapr.io/app-port: {{ .Values.config.app_port | quote}}
+        dapr.io/log-as-json: "true"
+    spec:
+      containers:
+      - name: {{ include "fanavaran.fullname" . }}
+        image:  {{ list .Values.fanavaran.image.repository ":" .Values.fanavaran.image.tag | join "" }} 
+        imagePullPolicy: Always
+        ports:
+        - name: "api-http"
+          containerPort: {{ .Values.config.app_port }}
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+           name: {{ include "fanavaran.fullname" . }}-env
