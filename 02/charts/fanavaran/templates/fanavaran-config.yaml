@@ -10,7 +10,4 @@ data:
   OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
   OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
   ASPNETCORE_URLS: {{ list "http://+:" .Values.config.app_port | join "" |  quote }}
-  SHARE_SQL_CONNECTION: {{ list "Server=" .Values.fanavaran.sql.server "," .Values.fanavaran.sql.port ";Database=" .Values.fanavaran.sql.database ";User ID=" .Values.fanavaran.sql.user_id ";Password=" .Values.fanavaran.sql.password ";TrustServerCertificate=true;" | join "" |  quote }} 
-  # "Server=sqlserver.dev.svc.cluster.local,1433;Database=master;User ID=sa;Password=Admin@123;TrustServerCertificate=true;"
-  # "Server=localhost;Database=Share;User ID=sa;Password=Admin@123;TrustServerCertificate=true;"
-
+  

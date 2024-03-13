@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: {{ include "fanavaran.fullname" . }}
-        image:  {{ list .Values.fanavaran.image.repository ":" .Values.fanavaran.image.tag | join "" }} 
+        image:  dockerhost.charisma.tech/fanavaran-api 
         imagePullPolicy: Always
         ports:
         - name: "api-http"
