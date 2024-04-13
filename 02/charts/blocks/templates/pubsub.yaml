@@ -6,36 +6,37 @@ metadata:
 
 spec:
 # Temporarily use Redis for pub/sub while waiting for https://github.com/dapr/components-contrib/issues/1372 to be released in 1.6.
-  type: rabbitmq-pubsub
+  type: pubsub.redis
 #  type: pubsub.rabbitmq
   version: v1
   metadata:
-  - name: connectionString
-    value: "amqp://insure-oms:kjDWgd2F3dfhjSG@10.104.142.35:31138"
-  - name: protocol
-    value: amqp  
-  - name: hostname
-    value: 10.104.142.35 
-  - name: username
-    value: insure-oms
-  - name: password
-    value: kjDWgd2F3dfhjSG  
-  - name: durable
-    value: "false"
-  - name: deletedWhenUnused
-    value: "false"
-  - name: autoAck
-    value: "false"
-  - name: reconnectWait
-    value: "0"
-  - name: concurrency
-    value: parallel
-#   - name: redisHost
-#     value: redis:6379
-#   - name: redisPassword
-#     secretKeyRef:
-#       name: insurance-secrets
-#       key: RedisPassword
-# auth:
-#   secretStore: insurance-secretstore
+  # - name: connectionString
+  #   value: "amqp://insure-oms:kjDWgd2F3dfhjSG@10.104.142.35:31138"
+  # - name: protocol
+  #   value: amqp  
+  # - name: hostname
+  #   value: 10.104.142.35 
+  # - name: username
+  #   value: insure-oms
+  # - name: password
+  #   value: kjDWgd2F3dfhjSG  
+  # - name: durable
+  #   value: "false"
+  # - name: deletedWhenUnused
+  #   value: "false"
+  # - name: autoAck
+  #   value: "false"
+  # - name: reconnectWait
+  #   value: "0"
+  # - name: concurrency
+  #   value: parallel
+
+  - name: redisHost
+      value: redis:6379
+    - name: redisPassword
+      secretKeyRef:
+        name: insurance-secrets
+        key: RedisPassword
+  auth:
+    secretStore: insurance-secretstore
 
