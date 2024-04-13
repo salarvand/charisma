@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "token.fullname" . }}
+  namespace: {{ .Values.namespace }}
+spec:
+  minReadySeconds: {{ .Values.token.min_ready_seconds }}
+  replicas: {{ .Values.token.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "token.fullname" . }}
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: {{ include "token.fullname" . }}
+    spec:
+      containers:
+      - name: {{ include "token.fullname" . }}
+        image:  {{ list .Values.token.image.repository ":" .Values.token.image.tag | join "" }} 
+        imagePullPolicy: Always
+        ports:
+        - name: "api-http"
+          containerPort: {{ .Values.config.app_port }}
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+           name: {{ include "token.fullname" . }}-env

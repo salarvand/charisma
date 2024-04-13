@@ -3,7 +3,7 @@
 # metadata:
 #   name: sqlserver
 #   namespace: {{ .Values.namespace }}
-# spec:
+# spec: 
 #   minReadySeconds: 60
 #   replicas: 1
 #   selector:

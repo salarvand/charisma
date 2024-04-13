@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "gateway.fullname" . }}
+  namespace: {{ .Values.namespace }}
+spec:
+  minReadySeconds: {{ .Values.gateway.min_ready_seconds }}
+  replicas: {{ .Values.gateway.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "gateway.fullname" . }}
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: {{ include "gateway.fullname" . }}
+    spec:
+      containers:
+      - name: {{ include "gateway.fullname" . }}
+        image:  {{ list .Values.gateway.image.repository ":" .Values.gateway.image.tag | join "" }} 
+        imagePullPolicy: Always
+        ports:
+        - name: "api-http"
+          containerPort: {{ .Values.config.app_port }}
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+           name: {{ include "gateway.fullname" . }}-env

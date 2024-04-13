@@ -1,0 +1,15 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "idp.fullname" . }}-env
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: insurance
+    service: {{ include "idp.fullname" . }}
+data:
+  OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
+  OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
+  ASPNETCORE_URLS: {{ list "http://+:" .Values.config.app_port | join "" |  quote }}
+  IDENTITY_DB_CONNECTION: "Server=10.104.120.10,5041;Database=InsuranceOMS;User ID=app_InsuranceOMS_o;Password=FtjC7ml5mkhGIKeAm0zVqGLtDtCUIxteX419Er5MX27k;TrustServerCertificate=true;"
+  IDENTITY_SERVER_DB_CONNECTION: "Server=10.104.120.10,5041;Database=InsuranceOMS;User ID=app_InsuranceOMS_o;Password=FtjC7ml5mkhGIKeAm0zVqGLtDtCUIxteX419Er5MX27k;TrustServerCertificate=true;"
+  

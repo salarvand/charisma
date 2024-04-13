@@ -9,14 +9,15 @@ spec:
   version: v1
   metadata:
   - name: redisHost
-    value: redis:6379
+    value: 10.104.142.36:30137
   - name: redisPassword
-    secretKeyRef:
-      name: insurance-secrets
-      key: RedisPassword
+    value: jEr4Qk56HtpS4k1G75
+    # secretKeyRef:
+    #   name: insurance-secrets
+    #   key: RedisPassword
   - name: actorStateStore
     value: "true"
   - name: keyPrefix
     value: name
-auth:
-  secretStore: insurance-secretstore
+# auth:
+#   secretStore: insurance-secretstore

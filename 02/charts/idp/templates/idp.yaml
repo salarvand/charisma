@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "idp.fullname" . }}
+  namespace: {{ .Values.namespace }}
+spec:
+  minReadySeconds: {{ .Values.idp.min_ready_seconds }}
+  replicas: {{ .Values.idp.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "idp.fullname" . }}
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: {{ include "idp.fullname" . }}
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/config: {{ .Values.idp.block_config }}
+        # dapr.io/app-id: {{ include "idp.fullname" . }}
+        dapr.io/app-id: "idp"
+        dapr.io/app-port: {{ .Values.config.app_port | quote}}
+        dapr.io/log-as-json: "true"
+    spec:
+      containers:
+      - name: {{ include "idp.fullname" . }}
+        image:  {{ list .Values.idp.image.repository ":" .Values.idp.image.tag | join "" }} 
+        imagePullPolicy: Always
+        ports:
+        - name: "api-http"
+          containerPort: {{ .Values.config.app_port }}
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+           name: {{ include "idp.fullname" . }}-env

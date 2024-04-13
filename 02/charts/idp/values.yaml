@@ -8,12 +8,10 @@ service:
   type: ClusterIP
   port: 80
 
-fanavaran:
+idp:
   image:
-    repository: dockerhost.charisma.tech/fanavaran-api
+    repository: dockerhost.charisma.tech/insurance-idp
     tag: latest
   replicas: 1
   min_ready_seconds: 60
   block_config: "block-config"
-  # idp:
-  #   uri: {{.Release.Name}}-idp
