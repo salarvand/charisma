@@ -10,7 +10,7 @@ service:
 
 token:
   image:
-    repository: dockerhost.charisma.tech/token-fanavaran-client
+    repository: dockerhost.charisma.tech/insurance-token-fanavaran-client
     tag: latest
   replicas: 1
   min_ready_seconds: 60
