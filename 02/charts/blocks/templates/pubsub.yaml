@@ -32,11 +32,11 @@ spec:
   #   value: parallel
 
   - name: redisHost
-      value: redis:6379
-    - name: redisPassword
-      secretKeyRef:
-        name: insurance-secrets
-        key: RedisPassword
-  auth:
-    secretStore: insurance-secretstore
+    value: redis:6379
+  - name: redisPassword
+    secretKeyRef:
+      name: insurance-secrets
+      key: RedisPassword
+auth:
+  secretStore: insurance-secretstore
 
