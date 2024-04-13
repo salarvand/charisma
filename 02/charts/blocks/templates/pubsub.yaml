@@ -6,7 +6,7 @@ metadata:
 
 spec:
 # Temporarily use Redis for pub/sub while waiting for https://github.com/dapr/components-contrib/issues/1372 to be released in 1.6.
-  type: pubsub.redis
+  type: rabbitmq-pubsub
 #  type: pubsub.rabbitmq
   version: v1
   metadata:
