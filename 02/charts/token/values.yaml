@@ -11,7 +11,7 @@ service:
 token:
   image:
     repository: dockerhost.charisma.tech/fanavaran-client
-    tag: latest
+    tag: 14030125070644
   replicas: 1
   min_ready_seconds: 60
   block_config: "block-config"
