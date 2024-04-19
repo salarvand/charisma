@@ -2,11 +2,11 @@ namespace: dev
 hostName: localhost
 
 config:
-  app_port: 80
+  app_port: 8080
 
 service:
   type: LoadBalancer
-  port: 8085
+  port: 80
 
 gateway:
   image:
