@@ -2,7 +2,7 @@ namespace: dev
 hostName: localhost
 
 config:
-  app_port: 8080
+  app_port: 80
 
 service:
   type: LoadBalancer
