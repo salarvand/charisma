@@ -5,8 +5,8 @@ config:
   app_port: 8080
 
 service:
-  type: ClusterIP
-  port: 80
+  type: LoadBalancer
+  port: 8085
 
 gateway:
   image:
