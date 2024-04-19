@@ -6,7 +6,7 @@ config:
 
 service:
   type: LoadBalancer
-  port: 81
+  port: 80
 
 gateway:
   image:
