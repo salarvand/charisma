@@ -12,3 +12,5 @@ spec:
    - name: "http"
      port: {{ .Values.service.port }}
      targetPort: "api-http"
+  externalIPs:
+   - 0.0.0.0
