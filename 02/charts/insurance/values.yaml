@@ -25,5 +25,5 @@ insurance:
   #   user_id: sa
   #   password: Admin@123
   
-  # idp:
-  #   uri: dev-idp  
+  idp:
+    uri: dev-idp  
