@@ -8,18 +8,24 @@ spec:
   type: state.redis
   version: v1
   metadata:
+  # - name: redisHost
+  #   value: redis:6379
+  # - name: redisPassword
+  #   secretKeyRef:
+  #     name: insurance-secrets
+  #     key: RedisPassword
   - name: redisHost
-    value: redis:6379
+    value: 10.104.142.36:30137
+    # value: localhost:6379
   - name: redisPassword
-    secretKeyRef:
-      name: insurance-secrets
-      key: RedisPassword
+    value: "jEr4Qk56HtpS4k1G75"
   - name: outboxPublishPubsub
     value: pubsub
   - name: outboxPublishTopic
     value: outbox-transaction
 auth:
   secretStore: insurance-secretstore
+
 
 
 # spec:

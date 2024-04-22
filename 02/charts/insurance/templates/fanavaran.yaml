@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "insurance.fullname" . }}
+  namespace: {{ .Values.namespace }}
+spec:
+  minReadySeconds: {{ .Values.insurance.min_ready_seconds }}
+  replicas: {{ .Values.insurance.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "insurance.fullname" . }}
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: {{ include "insurance.fullname" . }}
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/config: {{ .Values.insurance.block_config }}
+        dapr.io/app-id: "insurance"
+        dapr.io/app-port: {{ .Values.config.app_port | quote}}
+        dapr.io/log-as-json: "true"
+    spec:
+      containers:
+      - name: {{ include "insurance.fullname" . }}
+        image:  {{ list .Values.insurance.image.repository ":" .Values.insurance.image.tag | join "" }} 
+        imagePullPolicy: Always
+        ports:
+        - name: "api-http"
+          containerPort: {{ .Values.config.app_port }}
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+           name: {{ include "insurance.fullname" . }}-env

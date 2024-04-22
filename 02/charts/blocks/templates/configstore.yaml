@@ -1,0 +1,14 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: configstore
+  namespace: {{ .Values.namespace }}
+spec:
+  type: configuration.redis
+  version: v1
+  metadata:
+  - name: redisHost
+    value: 10.104.142.36:30137
+    # value: localhost:6379
+  - name: redisPassword
+    value: "jEr4Qk56HtpS4k1G75"
