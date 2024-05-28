@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "insurance.fullname" . }}-dbup
+  namespace: {{ .Values.namespace }}
+  
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+
+spec:
+  backoffLimit: 5
+  template:
+    metadata:
+      labels:
+        app: {{ include "insurance.fullname" . }}-dbup
+    spec:
+      containers:
+      - name: {{ include "insurance.fullname" . }}-dbup
+        image:  {{ list .Values.insurance.image_db.repository ":" .Values.insurance.image_db.tag | join "" }} 
+        imagePullPolicy: Always
+        env:
+        - name: INSURANCE_SQL_CONNECTION
+          valueFrom:
+            configMapKeyRef:
+              name: {{ include "insurance.fullname" . }}-env
+              key: INSURANCE_SQL_CONNECTION 
+      restartPolicy: Never     

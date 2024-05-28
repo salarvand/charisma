@@ -12,9 +12,9 @@ insurance:
   image:
     repository: dockerhost.charisma.tech/insurance-api-main
     tag: latest
-  # image_db:
-  #   repository: localhost:5001/insurance-share-api-dbup
-  #   tag: latest  
+  image_db:
+    repository: dockerhost.charisma.tech/insurance-api-dbup
+    tag: latest  
   replicas: 1
   min_ready_seconds: 60
   block_config: "block-config"
