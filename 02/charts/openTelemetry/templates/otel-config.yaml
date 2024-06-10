@@ -1,0 +1,25 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "otel.fullname" . }}-env
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: insurance
+    service: {{ include "otel.fullname" . }}
+data:
+  Dashboard__ApplicationName: "Charisma Insurance"
+  # Dashboard__Otlp__AuthMode: "Unsecured"
+  DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS: "true"
+  DASHBOARD__TELEMETRYLIMITS__MAXLOGCOUNT: "1000"
+  DASHBOARD__TELEMETRYLIMITS__MAXTRACECOUNT: "1000"
+  DASHBOARD__TELEMETRYLIMITS__MAXMETRICSCOUNT: "1000"
+  ASPNETCORE_URLS: "http://0.0.0.0:18888"
+  
+  # ASPNETCORE_URLS: {{ list "http://0.0.0.0:" .Values.config.app_port | join "" |  quote }}
+  
+  # OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
+  # OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
+  
+  # IDENTITY_DB_CONNECTION: "Server=10.104.120.10,5041;Database=InsuranceOMS;User ID=app_InsuranceOMS_o;Password=FtjC7ml5mkhGIKeAm0zVqGLtDtCUIxteX419Er5MX27k;TrustServerCertificate=true;"
+  # IDENTITY_SERVER_DB_CONNECTION: "Server=10.104.120.10,5041;Database=InsuranceOMS;User ID=app_InsuranceOMS_o;Password=FtjC7ml5mkhGIKeAm0zVqGLtDtCUIxteX419Er5MX27k;TrustServerCertificate=true;"
+  

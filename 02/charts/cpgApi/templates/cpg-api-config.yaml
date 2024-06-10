@@ -1,0 +1,16 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "cpgapi.fullname" . }}-env
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: insurance
+    service: {{ include "cpgapi.fullname" . }}
+data:
+  OTEL_EXPORTER_OTLP_ENDPOINT: {{list "http://" .Values.cpgapi.otel.uri ":18889" | join "" | quote}}
+  OTEL_SERVICE_NAME: "cpgapi"
+  OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES: "true"
+  OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES: "true"
+  ASPNETCORE_URLS: {{ list "http://+:" .Values.config.app_port | join "" |  quote }}
+  IDP_URI: {{list "http://" .Values.cpgapi.idp.uri | join "" | quote}}
+  
